@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/Moviestack_favicon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Moviestack | Movies - Federico Val</title>
+</head>
+<body>
+    <header class="flex flex-col justify-center items-center gap-3 pb-2 border-2 border-gray-400 bg-gray-700 text-white pt-2 md:flex-row md:justify-between md:gap-0 lg:justify-between">
+        <div class="flex justify-center items-center w-full md:w-1/3 ">
+            <picture class="w-20">
+                <img class="object-cover"  src="../img/Moviestack_isotipo.png" alt="Logo">
+            </picture>
+            <a href="../../index.html"><h1>MOVIESTACK</h1></a>
+        </div>
+        <nav class="md:w-1/3 lg:w-1/4 md:mr-2 lg:mr-0">
+            <ul class="flex w-full gap-12">
+                <li><a href="../../index.html">HOME</a></li>
+                <li><a class="border border-white p-1 bg-gray-900" href="#">MOVIES</a></li>
+                <li><a href="#">FAVS</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="flex grow min-h-screen flex-col bg-gray-900 text-white gap-4">
+        <h2 class="m-2 mt-4 p-3 text-3xl text-center font-bold border border-gray-400 bg-black">MOVIES</h2>
+        <div id="divMovies" class="md:flex md:w-full md:flex-wrap md:justify-center lg:grid lg:grid-cols-4 lg:gap-4 p-4">
+            
+        </div>
+    </main>
+    <footer class="flex justify-center items-center border-2 border-gray-400 bg-gray-700 text-white">
+        <p>Federico Val - Cohort N52</p>
+    </footer>
+    <script src="../js/tailwind.config.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/movies.js"></script>
+    <script src="../js/home.js"></script>
+</body>
+</html>

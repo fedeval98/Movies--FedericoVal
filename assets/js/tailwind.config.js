@@ -1,10 +1,16 @@
-/** @type {import('tailwindcss').Config} */
-export const theme = {
-    extend: {
+tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          geist: ['Geist-Medium', 'sans-serif'],
+          geistul: ['Geist-Ultralight','sans-serif'],
         colors: {
-            clifford: "#da373d",
-        },
-    
-    },
-};
-export const plugins = [];
+          spaceCadet: '#7052FF',
+          ultraViolet: '#d06aff',
+          eggplant: '#FF81FF',
+          mauve: '#957186',
+        }
+      }
+    }
+  }
+}

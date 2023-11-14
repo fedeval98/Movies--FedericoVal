@@ -1,7 +1,7 @@
 //Captura de elementos del HTML
 const selectGenres = document.getElementById("selectgenres")
 const moviesContenedor = document.getElementById("divMovies")
-const verMas = "Ver más"
+const verMas = "View more"
 const detailsContainer = document.getElementById("movieDetails")
 const searchInput = document.getElementById("searchInput")
 const buttonClear = document.getElementById("clear")

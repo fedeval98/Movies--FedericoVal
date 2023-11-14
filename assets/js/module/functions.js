@@ -28,7 +28,7 @@ function crearP(movie){
 
 function crearA(movie){
     const a = document.createElement("a")
-    a.textContent = "Ver más"
+    a.textContent = "View more"
     a.href = `./details.html?id=${movie.id}`
     a.id = "anchor"
     return a

@@ -1,9 +1,8 @@
-
 //Creacion de elementos
 // img, h3, h4, p y a
 function crearImg (movie){
   const img = document.createElement("img")
-  img.src = movie.image
+  img.src = `https://moviestack.onrender.com/static/${movie.image}`
   img.alt = movie.title
   return img
 }
@@ -231,12 +230,12 @@ function crearFila(movie, propiedades) {
   for (const propiedad of propiedades) {
     const cell = document.createElement("td")
     const strong = document.createElement("strong")
-    row.classList.add("flex","flex-col","gap-4","lg:text-2xl")
-    cell.classList.add("border")
-    strong.textContent = propiedad.charAt(0).toUpperCase() + propiedad.slice(1).replace(/_/g,' ')
-
-  
-    const text = document.createTextNode(`: ${movie[propiedad]}`)
+    const text = document.createElement("p")
+    row.classList.add("flex","flex-col","gap-4","lg:text-2xl","justify-center")
+    cell.classList.add("border-b-2", "flex", "gap-2", "justify-between","items-center","p-2","md:p-4")
+    strong.textContent = `${propiedad.charAt(0).toUpperCase() + propiedad.slice(1).replace(/_/g,' ')}: `
+    text.textContent = movie[propiedad]
+    addSymbol(text,strong)
 
     // Agregar los nodos al elemento td
     cell.appendChild(strong)
@@ -246,3 +245,23 @@ function crearFila(movie, propiedades) {
 
   return row
 }
+
+function addSymbol (text,strong){
+  if (strong.textContent.toLowerCase() == `budget: `){
+    text.textContent = `${text.textContent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} USD`
+  }else if (strong.textContent.toLowerCase() == `runtime: `){
+    text.textContent = `${text.textContent} minutes`  
+  }else if (strong.textContent.toLowerCase() ==`vote average: `){
+    const numero = Number(text.textContent)
+    const porcentaje = `${((numero*10).toFixed(2))}%`
+    console.log(porcentaje)
+    text.textContent = porcentaje
+    return text
+  } else if(strong.textContent.toLowerCase() ==`revenue: `){
+    text.textContent = `${text.textContent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} USD`
+  }
+}
+
+//.toString() es para convertir a texto un numero
+//.replace() es un metodo de los strings para reemplazar algo dentro
+//No se que es (/\B(?=(\d{3})+(?!\d))/g, ".") lo saque de buscar como transformar numeros planos a numeros con puntos

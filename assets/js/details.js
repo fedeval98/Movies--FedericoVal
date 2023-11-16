@@ -1,10 +1,23 @@
-import {movies} from './data.js'
 import { 
   introducirCard,
   crearElementosDelCard,
   crearTablaDetails,
   crearElementosDetails,
 } from './module/functions.js'
+
+//Key de la API por headers
+const requestOptions = {
+  headers:{
+    "x-api-key": '0ff70d54-dc0b-4262-9c3d-776cb0f34dbd'
+  }
+}
+let moviesData = {}
+fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
+  .then(response => response.json())
+  .then (data => {
+    moviesData = data
+    const movies = moviesData.movies
+
 const search = location.search
 
 const params = new URLSearchParams(search)
@@ -26,3 +39,6 @@ crearTablaDetails(movieid, propiedadesTabla1, tabla1)
 // Tabla 2
 const propiedadesTabla2 = ["vote_average", "budget", "revenue"]
 crearTablaDetails(movieid, propiedadesTabla2, tabla2)
+
+})
+.catch (error => console.log ("error:",error))

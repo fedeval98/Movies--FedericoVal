@@ -15,8 +15,6 @@ import {
   sortArray,
 
 }from '../js/module/functions.js'
-//Ejecucion de la funcion para darle valores por argumento a las cards y que las cree
-
 //Key de la API por headers
 const requestOptions = {
   headers:{
@@ -32,7 +30,13 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
 
     const movies = sortArray(movie)
 
-    introducirCard(movies, moviesContenedor, crearElementosDelCard)
+    const favMovies = JSON.parse(localStorage.getItem('likes'))
+
+    
+    const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
+    console.log(favMoviesFiltered)
+    
+    introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
 
     const listOfGenres = genresList(destructureMovies(movies))
     crearOptions(listOfGenres, selectGenres)

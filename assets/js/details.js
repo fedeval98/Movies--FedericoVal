@@ -1,6 +1,5 @@
 import { 
   introducirCard,
-  crearElementosDelCard,
   crearTablaDetails,
   crearElementosDetails,
 } from './module/functions.js'

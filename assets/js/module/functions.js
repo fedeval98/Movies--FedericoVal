@@ -1,5 +1,12 @@
 //Creacion de elementos
 // img, h3, h4, p y a
+
+function crearArticle(movie){
+const article = document.createElement("article")
+article.dataset.id = movie.id
+return article
+}
+
 function crearImg (movie){
   const img = document.createElement("img")
   img.src = `https://moviestack.onrender.com/static/${movie.image}`
@@ -33,41 +40,51 @@ function crearA(movie){
     return a
 }
 
+function crearFav (){
+  const fav = document.createElement("img")
+  fav.src = `../img/like.png`
+  return fav
+}
+
+function crearPicture (){
+const picture = document.createElement("picture")
+return picture
+}
 // Dar clase a los elementos creados
-function darClaseElementosCard(article, img, h3, h4, p, a){
+function darClaseElementosCard(article, img, h3, h4, p, a, picture, fav){
   article.classList.add("bg-gray-900","border-2", "border-dashed", "border-gray-400", "rounded-2xl", "p-4", "m-2", "flex", "flex-col", "md:w-1/3", "md:flex-wrap","lg:w-auto","lg:ml-auto", "lg:mr-auto","justify-between")
   img.classList.add("mb-3")
   h3.classList.add("mb-1", "font-bold", "text-2xl")
   h4.classList.add("mb-3","italic")
   p.classList.add("mb-3","line-clamp-5","md:line-clamp-3","lg:line-clamp-2")
   a.classList.add("text-blue-400", "cursor-pointer", "border","w-1/3","text-center","bg-black","rounded-xl","self-end")
+  picture.classList.add("w-[45px]", "absolute", "m-0","cursor-pointer")
+  fav.classList.add("w-full")
 }
 
 //Incrustar los elementos en el Article utilizando el parametro movie (tomado de introducirCard)
 export function crearElementosDelCard(movie){
-  const article = document.createElement("article")
+  const article = crearArticle (movie)
   const img = crearImg(movie)
   const h3 = crearH3(movie)
   const h4 = crearH4(movie)
   const p = crearP(movie)
   const a = crearA(movie)
+  const picture = crearPicture()
+  const fav = crearFav()
 
   article.appendChild(img)
   article.appendChild(h3)
   article.appendChild(h4)
   article.appendChild(p)
   article.appendChild(a)
+  picture.appendChild(fav)
+  article.appendChild(picture)
 
-  darClaseElementosCard(article, img, h3, h4, p, a)
+  changeImg(picture, fav, movie, article)
+
+  darClaseElementosCard(article, img, h3, h4, p, a, picture, fav)
   return article
-}
-
-// Evento ver mas
-function eventoVerMas(a, p){
-  a.addEventListener("click",()=>{
-      p.style.display = "block"
-      a.style.display = "none"
-  })
 }
 
 // Introducir cards al contenedor
@@ -104,7 +121,6 @@ export function filtrarPorTituloCaseInsensitive(arrayMovie, titulo) {
   );
   return filtroTitulo;
 }
-
 
 //.toLowerCase() lo que hace es transformar a minusculas el texto 
 // Al aplicarlo en movie.title hacemos que el titulo de la pelicula 
@@ -145,7 +161,6 @@ function filterMoviesByGenre (moviesArray, genre){
 export function manejarCambioSelect(moviesArray, option, input, contenedor) {
   const selectGenre = option.value
   const selectNombre = input.value.trim().toLowerCase()
-  const filtroPorGenero = filterMoviesByGenre(moviesArray, selectGenre)
 
   // Filtrar por género si se selecciona un género
   const resultadoPorGenero = selectGenre !== ""
@@ -172,9 +187,6 @@ export function manejarCambioSelect(moviesArray, option, input, contenedor) {
     contenedor.appendChild(mensajeNoResultados)
   }
 
-  searchInput.addEventListener('keyup', () => {
-    manejarCambioSelect(moviesArray, option, input, contenedor)
-  })
 }
 
 //Crear pagina de Details
@@ -265,3 +277,45 @@ function addSymbol (text,strong){
 //.toString() es para convertir a texto un numero
 //.replace() es un metodo de los strings para reemplazar algo dentro
 //No se que es (/\B(?=(\d{3})+(?!\d))/g, ".") lo saque de buscar como transformar numeros planos a numeros con puntos
+
+export function sortArray(arrayMovies){
+  const moviesSorted = arrayMovies
+  moviesSorted.sort(function(a,b){
+  const titleA = a.title
+  const titleB = b.title
+  if (titleA > titleB){
+    return 1
+  }
+  if (titleA < titleB){
+    return -1
+  }
+  return 0
+  })
+return moviesSorted
+}
+
+//Creando el evento para cambiar imagen y capturar el id de la pelicula en local storage
+
+function changeImg (picture, fav, movie, article){
+  let localStorageMovie = JSON.parse(localStorage.getItem('likes')) || []
+  if (localStorageMovie.some( item => item.id === movie.id)){
+    fav.src = '../img/like_fill.png'
+  } else{
+    fav.src = '../img/like.png'
+  }
+
+  picture.addEventListener('click', () => {
+    localStorageMovie = JSON.parse(localStorage.getItem('likes')) || []
+    const movieLiked = localStorageMovie.some( item => item.id === movie.id)
+      if(!movieLiked){
+        localStorageMovie.push({id: article.dataset.id})
+        fav.src = '../img/like_fill.png'
+      } else {
+        if (movieLiked){
+          localStorageMovie = localStorageMovie.filter(item => item.id !== movie.id)
+          fav.src = '../img/like.png'
+        }
+    }
+    localStorage.setItem('likes', JSON.stringify(localStorageMovie))
+  })
+}

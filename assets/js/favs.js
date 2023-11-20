@@ -29,12 +29,11 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
     const movie = moviesData.movies
 
     const movies = sortArray(movie)
-
+    console.log (movies)
     const favMovies = JSON.parse(localStorage.getItem('likes'))
 
     
     const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
-    console.log(favMoviesFiltered)
     
     introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
 

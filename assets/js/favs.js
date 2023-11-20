@@ -29,29 +29,33 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
     const movie = moviesData.movies
 
     const movies = sortArray(movie)
-    console.log (movies)
+
     const favMovies = JSON.parse(localStorage.getItem('likes'))
 
-    
-    const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
-    console.log(favMoviesFiltered)
-    
-    introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
+    console.log(favMovies)
 
-    const listOfGenres = genresList(destructureMovies(favMoviesFiltered))
-    crearOptions(listOfGenres, selectGenres)
+    if(Object.keys(localStorage).length !== 0){
+      const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
+      
+      introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
 
-    selectGenres.addEventListener('change', () => {
-      manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
-    })
-    searchInput.addEventListener('keyup', () => {
+      const listOfGenres = genresList(destructureMovies(favMoviesFiltered))
+      
+      crearOptions(listOfGenres, selectGenres)
+
+      selectGenres.addEventListener('change', () => {
         manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
       })
-    buttonClear.addEventListener('click',()=>{
-      selectGenres.value = ""
-      searchInput.value = ""
-      manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
-    })
+      
+      searchInput.addEventListener('keyup', () => {
+          manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+        })
+      
+      buttonClear.addEventListener('click',()=>{
+        selectGenres.value = ""
+        searchInput.value = ""
+        manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+      })
     } else if (Object.keys(localStorage).length === 0 || favMovies.length === 0){
       moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
     }

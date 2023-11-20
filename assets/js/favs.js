@@ -58,6 +58,5 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
     } else if (Object.keys(localStorage).length === 0 || favMovies.length === 0){
       moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
     }
-    
   })
   .catch (error => console.log ("error:",error))

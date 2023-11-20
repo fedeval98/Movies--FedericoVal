@@ -32,9 +32,13 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
 
     const favMovies = JSON.parse(localStorage.getItem('likes'))
 
-    console.log(favMovies)
+    console.log (favMovies)
 
-    if(Object.keys(localStorage).length !== 0){
+    if(favMovies.length == 0 || Object.keys(localStorage).length === 0){
+      moviesContenedor.classList.add ("text-center")
+      moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
+    } else if (Object.keys(localStorage).length !== 0 || favMovies.length >= 1){
+
       const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
       
       introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
@@ -56,8 +60,6 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
         searchInput.value = ""
         manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
       })
-    } else if (Object.keys(localStorage).length === 0 || favMovies.length === 0){
-      moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
     }
   })
   .catch (error => console.log ("error:",error))

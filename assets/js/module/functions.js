@@ -8,8 +8,9 @@ return article
 }
 
 function crearImg (movie){
+  const url = `https://moviestack.onrender.com/static/${movie.image}`
   const img = document.createElement("img")
-  img.src = `https://moviestack.onrender.com/static/${movie.image}`
+  img.src = url
   img.alt = movie.title
   return img
 }
@@ -221,8 +222,8 @@ export function crearElementosDetails (movie){
 function darClaseElementosDetails(articleDetails, picture, div, img, h3, h4, p, pD){
   articleDetails.classList.add("flex", "flex-col","text-white","gap-2","m-2","md:flex-row","mt-10","lg:text-2xl")
   div.classList.add("flex", "flex-col","gap-4","md:w-1/3","lg:justify-around")
-  picture.classList.add("w-full","md:w-2/3","lg:grow")
-  img.classList.add("w-full","mb-3","object-cover","lg:w-full")
+  picture.classList.add("md:w-2/3","lg:grow")
+  img.classList.add("mb-3","object-cover","lg:w-full")
   h3.classList.add("mb-1", "font-bold", "text-2xl","uppercase","lg:text-4xl")
   h4.classList.add("mb-3")
   p.classList.add("mb-3")
@@ -244,7 +245,7 @@ function crearFila(movie, propiedades) {
     const strong = document.createElement("strong")
     const text = document.createElement("p")
     row.classList.add("flex","flex-col","gap-4","lg:text-2xl","justify-center")
-    cell.classList.add("border-b-2","w-full", "flex", "gap-2", "justify-between","items-center","p-2","md:p-4")
+    cell.classList.add("border-b-2", "flex", "gap-2", "justify-between","items-center","p-2","md:p-4")
     strong.textContent = `${propiedad.charAt(0).toUpperCase() + propiedad.slice(1).replace(/_/g,' ')}: `
     text.textContent = movie[propiedad]
     addSymbol(text,strong)

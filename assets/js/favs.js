@@ -29,7 +29,7 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
     const movie = moviesData.movies
 
     const movies = sortArray(movie)
-    console.log (movies)
+
     const favMovies = JSON.parse(localStorage.getItem('likes'))
 
     
@@ -38,23 +38,19 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
     
     introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
 
-    const listOfGenres = genresList(destructureMovies(favMoviesFiltered))
+    const listOfGenres = genresList(destructureMovies(movies))
     crearOptions(listOfGenres, selectGenres)
 
     selectGenres.addEventListener('change', () => {
-      manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+      manejarCambioSelect(movies, selectGenres, searchInput, moviesContenedor)
     })
     searchInput.addEventListener('keyup', () => {
-        manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+        manejarCambioSelect(movies, selectGenres, searchInput, moviesContenedor)
       })
     buttonClear.addEventListener('click',()=>{
       selectGenres.value = ""
       searchInput.value = ""
-      manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+      manejarCambioSelect(movies, selectGenres, searchInput, moviesContenedor)
     })
-    } else if (Object.keys(localStorage).length === 0 || favMovies.length === 0){
-      moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
-    }
-    
   })
   .catch (error => console.log ("error:",error))

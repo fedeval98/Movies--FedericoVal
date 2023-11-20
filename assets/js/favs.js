@@ -32,8 +32,9 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
 
     const favMovies = JSON.parse(localStorage.getItem('likes'))
 
-    console.log (favMovies)
-
+    console.log ('favrmovies',favMovies)
+    
+    console.log (Object.keys(localStorage).length)
     if(favMovies.length == 0 || Object.keys(localStorage).length === 0){
       moviesContenedor.classList.add ("text-center")
       moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"

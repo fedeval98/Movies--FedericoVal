@@ -59,8 +59,8 @@ function darClaseElementosCard(article, img, h3, h4, p, a, picture, fav){
   h4.classList.add("mb-3","italic")
   p.classList.add("mb-3","line-clamp-5","md:line-clamp-3","lg:line-clamp-2")
   a.classList.add("text-blue-400", "cursor-pointer", "border","w-1/3","text-center","bg-black","rounded-xl","self-end")
-  picture.classList.add("w-[45px]", "absolute", "m-0","cursor-pointer")
-  fav.classList.add("w-full")
+  picture.classList.add("w-[45px]", "absolute", "m-0","cursor-pointer", "picture")
+  fav.classList.add("w-full", "picture")
 }
 
 //Incrustar los elementos en el Article utilizando el parametro movie (tomado de introducirCard)

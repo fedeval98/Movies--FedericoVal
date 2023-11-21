@@ -13,7 +13,7 @@ import {
   genresList,
   manejarCambioSelect,
   sortArray,
-
+  limpiarContenedor,
 }from '../js/module/functions.js'
 //Key de la API por headers
 const requestOptions = {
@@ -30,19 +30,19 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
 
     const movies = sortArray(movie)
 
-    const favMovies = JSON.parse(localStorage.getItem('likes'))
-
-    console.log ('favrmovies',favMovies)
+    let favMovies = JSON.parse(localStorage.getItem('likes'))
     
-    console.log (Object.keys(localStorage).length)
-    if(favMovies.length == 0 || Object.keys(localStorage).length === 0){
-      moviesContenedor.classList.add ("text-center")
+    if(Object.keys(localStorage).length === 0){
+      moviesContenedor.className = ""
+      moviesContenedor.classList.add ("text-center", "items-center","w-full")
       moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
-    } else if (Object.keys(localStorage).length !== 0 || favMovies.length >= 1){
+    } else if (Object.keys(localStorage).length !== 0 || favMovies.length !== 0){
 
-      const favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
+      let favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
       
       introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
+
+    
 
       const listOfGenres = genresList(destructureMovies(favMoviesFiltered))
       
@@ -60,6 +60,24 @@ fetch ("https://moviestack.onrender.com/api/movies", requestOptions)
         selectGenres.value = ""
         searchInput.value = ""
         manejarCambioSelect(favMoviesFiltered, selectGenres, searchInput, moviesContenedor)
+      })
+
+      moviesContenedor.addEventListener ('click', (event)=>{
+        const target = event.target
+  
+        if (target.classList.contains("picture")){
+          favMovies = JSON.parse(localStorage.getItem('likes'))
+          favMoviesFiltered = movies.filter(movie =>favMovies.some(favMovie => favMovie.id === movie.id))
+          limpiarContenedor(moviesContenedor)
+          introducirCard(favMoviesFiltered, moviesContenedor, crearElementosDelCard)
+          const listOfGenres = genresList(destructureMovies(favMoviesFiltered))
+          crearOptions(listOfGenres, selectGenres)
+        }
+        if (favMovies.length == 0 || Object.keys(localStorage).length === 0){
+          moviesContenedor.className = ""
+          moviesContenedor.classList.add ("text-center", "items-center","w-full")
+          moviesContenedor.innerHTML = "NO FAVORITE MOVIES FOUND"
+        }
       })
     }
   })
